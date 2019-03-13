@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>{{headerTitle}}</h2>
+  </div>
+</div>
+<div class="row" *ngIf="zoekEnabled">
+  <div class="col-md-12">
+      <table width="100%">
+        <tr>
+          <th>
+            Naam
+          </th>
+          <th colspan="2">
+            Benodigde tijd (minuten)
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" class="form-control" name=`receptNaam` id="receptNaam"
+                   placeholder="Zoeken op recept naam"
+                   [(ngModel)]="zoekNaam"
+                   #receptNaam="ngModel"
+                   [ngModelOptions]="{standalone: true}"
+            />
+          </td>
+          <td>
+            <select style="float: right" title="zoekOperatorTijd" class="input-inline" [(ngModel)]="zoekTijdOperator">
+              <option [ngValue]='"=="'>=</option>
+              <option [ngValue]='"<="'><=</option>
+              <option [ngValue]='">="'>>=</option>
+            </select>
+          </td>
+          <td>
+            <input type="number" class="form-control input-inline " name=`receptTijd` id="receptTijd"
+                   placeholder="Zoeken op bereidings tijd"
+                   [(ngModel)]="zoekTijd"
+                   #receptTijd="ngModel"
+                   [ngModelOptions]="{standalone: true}"
+            />
+          </td>
+        </tr>
+        <tr>
+        <td>
+          <button type="button" class="btn mr-2 myButton" (click)="zoeken()">Zoeken</button>
+        </td>
+      </tr>
+
+      </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="scrollWrapper">
+      <div class="flexContainer">
+          <div class="flexItem" *ngFor="let recept of recepten; index as i">
+            <div class="receptCard" [class.clickable]="clickEnabled" (click)="clickEnabled === true ? openDetail(recept.UID) : false">
+              <div>
+                <h4>{{recepten[i].naam}}</h4>
+              </div>
+              <div class="receptCardImg">
+                <img [src]="recepten[i].thumbnail || '/assets/icons/icon-384x384.png'" alt="recept thumbnail"/>
+              </div>
+              <div class="left">
+                <h6>{{recepten[i].aantalPersonen}} {{recepten[i].aantalPersonen == 1 ? 'Persoon' : 'Personen'}}</h6>
+              </div>
+              <div class="right">
+                <h6>{{recepten[i].benodigdeTijd}} minuten</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="showIncrement == true && recepten">
+  <div class="col-md-12">
+    <div style="display: flex; justify-content: space-around">
+      <button type="button" class="mr-2 btn myButton" *ngIf="recepten.length != 0" (click)="decrementLimit()" [disabled]="currentLimit <= min">Toon {{increment}} minder</button>
+      <button type="button" class="mr-2 btn myButton" *ngIf="recepten.length != 0" (click)="incrementLimit()">Toon {{increment}} meer</button>
+    </div>
+  </div>
+</div>

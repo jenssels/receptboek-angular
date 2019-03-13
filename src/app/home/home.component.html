@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>Welkom op Receptboek</h1>
+    <p>Receptboek is een website waar u recepten kan vinden, aanmaken en delen met andere mensen. <br>
+      U heeft de optie om publieke recepten te bekijken en uw eigen recepten publiek te maken zodat iedereen ze kan zien. <br>
+      Ook heeft u de optie om recepten met bepaalde mensen te delen zodat alleen zij en u het recept kunnen bekijken. <br>
+      U kan zich registreren door te klikken op login rechts bovenaan de pagina.
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Info over ontwikkelaar</h2>
+  </div>
+</div>
+<div class="row" style=" padding: auto 100px;">
+  <div class="col-md-3">
+          <div class="accountCard">
+            <h4><a class="linkStyle" href="mailto:jenssels1998@gmail.com">Jenssels1998@gmail.com</a></h4>
+            <img src="assets/Profiel.jpg" alt="foto ontwikkelaar" />
+            <h5><a class="linkStyle" href="tel:+32499743008">+32499743008</a></h5>
+          </div>
+  </div>
+  <div class="col-md-9">
+    <div class="myTextBlock">
+      <p>Mijn naam is Jens Sels en ik ben de ontwikkelaar van Receptboek.</p>
+      <p>Ik ben laatstejaarstudent applicatie development te Thomas More Geel.</p>
+      <p>Ik heb deze site gemaakt als opdracht voor het vak 'Mean Stack Development'.</p>
+      <p>De website maakt gebruik van Angular en Firebase, beide ontwikkeld door Google.</p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <app-recept-render headerTitle="Recent gepubliceerde recepten" [min]="8" [showIncrement]=false [clickEnabled]="gebruiker!==null"></app-recept-render>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>{{title}}</h1>
+  </div>
+</div>
+<form #f="ngForm" *ngIf="!loading">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Recept informatie</h2>
+      <div class="form-group">
+        <label for="receptNaam">Naam van het recept:</label>
+        <input type="text" class="form-control" name="receptNaam" id="receptNaam"
+               placeholder="Recept naam"
+               required
+               minlength="3"
+               #receptNaam="ngModel"
+               [(ngModel)]="Recept.naam"
+        />
+      </div>
+      <div class="form-group">
+        <label for="receptAantal">Aantal personen:</label>
+        <input type="number" class="form-control" name="receptAantal" id="receptAantal"
+               placeholder="Aantal personen"
+               required
+               #receptAantal="ngModel"
+               [(ngModel)]="Recept.aantalPersonen"
+        />
+      </div>
+      <div class="form-group">
+        <label for="receptTijd">Benodigde tijd om het recept te maken (in minuten):</label>
+        <input type="number" class="form-control" name="receptTijd" id="receptTijd"
+               placeholder="Tijd in minuten"
+               required
+               #receptTijd="ngModel"
+               [(ngModel)]="Recept.benodigdeTijd"
+        />
+      </div>
+      <div class="form-group">
+        <label for="receptBeschrijving">Korte beschrijving van je gerecht:</label>
+        <textarea cols="40" rows="5" class="form-control" name="receptBeschrijving" id="receptBeschrijving"
+                  placeholder="Korte beschrijving"
+                  required
+                  #receptBeschrijving="ngModel"
+                  [(ngModel)]="Recept.beschrijving"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="receptBereiding">Beschrijf hoe je het gerecht moet bereiden:</label>
+        <textarea cols="40" rows="5" class="form-control" name="receptBereiding" id="receptBereiding"
+                  placeholder="Uitleg bereiding"
+                  required
+                  #receptBereiding="ngModel"
+                  [(ngModel)]="Recept.bereiding"
+        ></textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div>
+        <h2>Ingrediënten</h2>
+        <button class="myAddButton" name="addIngredient" (click)="addIngredient()"><i class="fas fa-plus-circle"></i></button>
+        <div class="form-group">
+          <div class="scrollWrapper">
+            <table class="myInputTable">
+              <tr *ngFor="let ingredient of Recept.ingredienten; index as i;">
+                <td>
+                  <input type="text" class="form-control" name=`ingredientNaam` id="{{'ingredientNaam'+i}}"
+                         placeholder="{{'Ingredient ' + (i+1)}}"
+                         required
+                         minlength="3"
+                         [(ngModel)]="Recept.ingredienten[i].naam"
+                         #ingredientNaam="ngModel"
+                         [ngModelOptions]="{standalone: true}"
+                  />
+                </td>
+                <td>
+                  <input type="text" class="form-control" name="ingredientHoeveelheid" id="{{'ingredientHoeveelheid'+i}}"
+                         placeholder="{{'Hoeveelheid'}}"
+                         required
+                         [(ngModel)]="Recept.ingredienten[i].hoeveelheid"
+                         #ingredientHoeveelheid="ngModel"
+                         [ngModelOptions]="{standalone: true}"
+                  />
+                </td>
+                <td>
+                  <button class="myDeleteButton" name="deleteIngredient" (click)="removeIngredient(i)"><i class="fa fa-trash"
+                                                                                                          aria-hidden="true"></i></button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+      <input type="checkbox" id="isPubliek" [(ngModel)]="Recept.isPubliek" [ngModelOptions]="{standalone: true}" />
+      <label for="isPubliek">Recept publiek maken ?</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <h2>Thumbnail</h2>
+      <div class="col-md-12">
+        <img class="receptFoto" [src]="Recept.thumbnail || '/assets/icons/icon-384x384.png'">
+        <button class="btn mr-2 myButton alignTopRight" (click)="galerijUploader.click()">Thumbnail wijzigen</button>
+        <input id="fotoUploader" hidden type="file" accept='image/*' #galerijUploader name="galerijFoto" (change)="galerijFoto($event)" />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button type="button" class="btn mr-2 myButton" [disabled]="f.invalid || !user" (click)="gegevensOpslagen(f.valid)">Gegevens opslagen</button>
+      <button type="button" class="btn mr-2 myButton" routerLink="/home" >Annuleren</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>Mijn Account</h1>
+  </div>
+</div>
+<div class="row" [hidden]="fotoMode" *ngIf="gebruiker">
+  <div class="col-md-3">
+    <div class="accountCard" [hidden]="editMode">
+      <h4>{{gebruiker.gebruikersnaam}}</h4>
+      <img [src]="gebruiker.fotoCode" alt="profiel foto" />
+      <h5>{{gebruiker.email}}</h5>
+    </div>
+    <div class="accountCard" [hidden]="!editMode">
+      <h4>Foto wijzigen</h4>
+      <img [src]="gebruiker.fotoCode" alt="profiel foto" />
+      <div>
+        <button type="button" (click)="cameraFoto()"><i class="fas fa-camera-retro"></i> Camera</button>
+      </div>
+      <div class="uploadWrapper">
+        <button type="button" (click)="galerijUploader.click()"><i class="fas fa-images"></i> Galerij</button>
+        <input id="fotoUploader" hidden type="file" accept='image/*' #galerijUploader name="galerijFoto" (change)="galerijFoto($event)" />
+      </div>
+      <div>
+        <button type="button" (click)="galerijUploader.value = null" (click)="resetFoto()" class="lastButton"><i class="fas fa-eraser"></i> Reset foto</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5 offset-md-1">
+    <div class="accountBeschrijving" [hidden]="editMode">
+      <h3>Mijn beschrijving</h3>
+      <p>{{gebruiker.beschrijving || 'Geen beschrijving'}}</p>
+    </div>
+    <div [hidden]="!editMode">
+      <form #f="ngForm">
+      <div class="form-group">
+        <label for="gebruikersnaam">Gebruikersnaam:</label>
+        <input type="text" class="form-control" name="gebruikersnaam" id="gebruikersnaam"
+               placeholder="Gebruikersnaam"
+               required
+               minlength="3"
+               #gebruikersnaam="ngModel"
+               [(ngModel)]="gebruiker.gebruikersnaam"
+        />
+      </div>
+      <div class="form-group">
+        <label for="beschrijving">Vertel wat meer over jezelf:</label>
+        <textarea cols="40" rows="5" class="form-control" name="beschrijving" id="beschrijving"
+                  placeholder="Beschrijving"
+                  #beschrijving="ngModel"
+                  [(ngModel)]="gebruiker.beschrijving"
+        ></textarea>
+      </div>
+        <div>
+          <button type="button" class="btn mr-2 myButton" [disabled]="f.invalid" [hidden]="!editMode" (click)="gegevensWijzigen(f.valid, f.value)">Gegevens Opslagen</button>
+          <button type="reset" class="btn myButton mr-2" (click)="editMode = !editMode" [hidden]="!editMode">Annuleren</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <button type="button" class="btn mr-2 myButton" (click)="editMode = !editMode" [hidden]="editMode">Gegevens Wijzigen</button>
+  </div>
+</div>
+<div class="row" [hidden]="fotoMode">
+  <div class="col-md-12">
+    <app-recept-render mode="auteur" forId="{{gebruiker.uid}}" headerTitle="Mijn recepten"></app-recept-render>
+  </div>
+</div>
+<div class="row" [hidden]="!fotoMode">
+  <div class="col-md-4">
+      <webcam [height]="320" [width]="320" *ngIf="fotoMode == true" [mirrorImage]="isMirrored()" [trigger]="triggerFoto" (imageCapture)="handleImage($event)"></webcam>
+  </div>
+  <div class="col-md-4">
+    <img class="webcamFoto" [src]="foto.imageAsDataUrl" *ngIf="foto != null"/>
+  </div>
+  <div class="col-md-12">
+    <button class="btn mr-2 myButton" (click)="triggerSnapshot();">Neem foto</button>
+    <button class="btn mr-2 myButton" (click)="annulerenFoto();">Annuleren</button>
+    <button class="btn mr-2 myButton" *ngIf="foto != null" (click)="opslaanFoto();">Foto instellen als profielfoto</button>
+  </div>
+
+</div>
+
+<ng-template #uploadingModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Upload Status</h4>
+  </div>
+  <div class="modal-body">
+    <div [hidden]="!uploading">
+      <p>Aan het laden <i class="fa fa-spinner fa-spin"></i></p>
+    </div>
+    <div [hidden]="uploading">
+      {{uploadStatus}}
+    </div>
+  </div>
+</ng-template>

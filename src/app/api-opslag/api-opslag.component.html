@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>Opgeslagen API recepten</h1>
+    <p>Hier vindt u uw opgeslagen API recepten terug</p>
+    <p>Deze recepten staan opgeslagen op uw apparaat.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12" style="margin-bottom: 10px; margin-top: 10px;">
+    <div class="scrollWrapper">
+    <ngb-accordion [closeOthers]="true" activeIds="static-1">
+      <ngb-panel *ngFor="let recept of recepten; index as i" id=`static-{{i}}` title="{{recept.naam}}">
+        <ng-template ngbPanelContent>
+          <table width="100%">
+            <tr>
+              <td rowspan="5">
+                <a target="_blank" [href]="recept.link">
+                  <img class="img-fluid" height="250px" width="250px" [src]="recept.fotoCode" [alt]="recept.naam"/>
+                </a>
+              </td>
+              <td>
+                <h3>{{recept.naam}}</h3>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>Aantal personen: {{recept.aantalPersonen}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>Bereidingstijd: {{recept.tijd}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>Calorieën per maaltijd: {{getCalories(recept.calories, recept.aantalPersonen)}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p><button type="button" class="btn mr-2 myButton" (click)="deleteRecept(i)">Verwijderen</button></p>
+              </td>
+            </tr>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+    </div>
+  </div>
+</div>
+
+
+

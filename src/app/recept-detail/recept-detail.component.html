@@ -1,0 +1,158 @@
+<div *ngIf="!loading">
+<div class="row">
+  <div class="col-md-3">
+    <div class="receptCard">
+      <div>
+        <h4>{{recept.naam}}</h4>
+      </div>
+      <div>
+        <img [src]="recept.thumbnail || '/assets/icons/icon-384x384.png'" alt="recept thumbnail"/>
+      </div>
+      <div class="left">
+        <h6>{{recept.aantalPersonen}} {{recept.aantalPersonen == 1 ? 'Persoon' : 'Personen'}}</h6>
+      </div>
+      <div class="right">
+        <h6>{{recept.benodigdeTijd}} minuten</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 padding-top-25-small">
+    <h2>Beschrijving:</h2>
+    <div class="scrollWrapper">
+      <pre class="myTextBlock">{{recept.beschrijving}}</pre>
+    </div>
+  </div>
+  <div class="col-md-3 padding-top-25-small" *ngIf="gebruiker && auteur">
+    <div>
+      <h2>Auteur:</h2>
+      <table class="auteurTable" (click)="openAuteurPagina(auteur.uid)" style="cursor: pointer">
+        <tr>
+          <td>
+            <img [src]="auteur.fotoCode || '/assets/icons/icon-96x96.png'" alt="profiel foto auteur"/>
+          </td>
+          <td>
+            <h3>{{auteur.gebruikersnaam}}</h3>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="isOwner() || gebruiker.isAdmin == true">
+      <button class="btn mr-2 myButton" (click)="openBewerkPagina()">Recept Bewerken</button>
+      <button class="btn mr-2 btn-danger" (click)="openDeleteModal()">Recept Verwijderen</button>
+    </div>
+  </div>
+</div>
+<div class="row" >
+  <div class="col-md-3 padding-top-25">
+    <h2>Ingrediënten</h2>
+    <div class="scrollWrapper">
+      <table class="myIngredientTable">
+        <tr *ngFor="let ingredient of recept.ingredienten">
+          <td>
+            <b>{{ingredient.hoeveelheid}}</b>
+          </td>
+          <td>
+            <div class="ingredientColor"><i>{{ingredient.naam}}</i></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-9 padding-top-25">
+    <h2>Bereiding</h2>
+    <div class="scrollWrapper">
+      <pre class="myTextBlock">{{recept.bereiding}}</pre>
+    </div>
+  </div>
+</div>
+  <div class="row" *ngIf="(isOwner() || gebruiker.isAdmin == true )  && recept.isPubliek !== true">
+    <div class="col-md-12">
+      <h2>Recept delen:</h2>
+    </div>
+    <div class="col-md-6" *ngIf="sharedUsers">
+      <h3>Gedeeld met:</h3>
+      <div class="scrollWrapper">
+      <table class="auteurTable">
+        <tr *ngFor="let shareUser of sharedUsers; index as i" (click)="openSharedUserDetail(i)" style="cursor: pointer">
+          <td *ngIf="shareUser.user">
+            <img [src]="shareUser.user.fotoCode || '/assets/icons/icon-96x96.png'" alt="profiel foto" />
+          </td>
+          <td *ngIf="shareUser.user">
+            <h4>{{shareUser.user.gebruikersnaam}}</h4>
+          </td>
+          <td *ngIf="shareUser.user">
+            <button type="button" class="btn btn-danger" (click)="unshareUser(i)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </table>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h3>Delen met:</h3>
+      <label for="userName">Gebruikers zoeken:</label>
+      <input type="text" class="form-control" name="userName" id="userName"
+             placeholder="Gebruikersnaam"
+             #userName="ngModel"
+             [(ngModel)]="zoekNaam"
+             (keyup)="userZoeken()"
+      />
+      <div class="scrollWrapper">
+      <table class="auteurTable">
+        <tr *ngFor="let user of users; index as i" (click)="openUserDetail(i)" style="cursor: pointer">
+          <td>
+            <img [src]="user.fotoCode || '/assets/icons/icon-96x96.png'" alt="profiel foto" />
+          </td>
+          <td>
+            <h4>{{user.gebruikersnaam}}</h4>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="shareUser(i)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{recept.naam}} verwijderen ?</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="!deleted">
+      <p>Bent u zeker dat u dit recept wilt verwijderen ?</p>
+      <p>Deze actie kan niet ongedaan gemaakt worden.</p>
+    </div>
+    <div *ngIf="deleted">
+      {{recept.naam}} succesvol verwijderd.
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" *ngIf="!deleted" (click)="deleteRecept()">Verwijderen</button>
+  </div>
+</ng-template>
+
+<ng-template #detail let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title2">{{selectedUser.gebruikersnaam}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table style="width: 100%; height: 100%">
+      <tr>
+        <td>
+          <img [src]="selectedUser.fotoCode || '/assets/icons/icon-96x96.png'" alt="{{selectedUser.gebruikersnaam}}">
+        </td>
+        <td>
+          <pre>{{selectedUser.beschrijving || 'Geen Beschrijving opgegeven'}}</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</ng-template>

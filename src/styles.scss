@@ -1,0 +1,345 @@
+// Link naar BS en FA
+@import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+// Variablen
+$myYellowColor: #FFFF33;
+$myBlueColor: #30d5c8;
+$myGreenColor: #4ba351;
+$myOrangeColor: #FF8000;
+$myRedColor: #e32929;
+
+html {
+  min-height: 100%;
+  height: auto;
+  margin: 0;
+}
+body{
+  background-image: url("assets/background.jpg");
+  background-size: cover;
+  min-height: 100%;
+  margin:0;
+
+  h1{
+    color: $myRedColor;
+  }
+
+  h2{
+    color: $myGreenColor;
+  }
+
+  h3 {
+    color: $myOrangeColor;
+  }
+
+  .backgroundWhite{
+    background-color: white;
+  }
+
+  .container{
+    padding-top: 25px;
+    background-color: rgba(255, 255, 255, 0.7);
+    min-height: 100vh;
+  }
+
+  .myOffset-right{
+    margin-right: 5%;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  .fa.fa-bars{
+    color: $myYellowColor;
+  }
+
+
+  .accountCard{
+    border: $myOrangeColor solid 2px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: $myBlueColor;
+    color: white;
+    word-wrap: break-word;
+
+
+    img{
+      width: 100%;
+      height: 100%;
+    }
+
+
+    button{
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+      height: 100%;
+      width: 100%;
+
+      &:hover{
+        color: $myBlueColor;
+        background-color: white;
+      }
+    }
+  }
+
+  .padding-top-25{
+    padding-top: 25px;
+  }
+
+  .left{
+    text-align: left;
+    padding-left: 5%;
+  }
+
+  .right{
+    text-align: right;
+    padding-right: 5%;
+  }
+
+  .receptCard{
+    width: 100%;
+    border: $myGreenColor solid 2px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: $myBlueColor;
+    color: white;
+    word-wrap: break-word;
+
+    &:hover{
+      border: $myOrangeColor solid 2px;
+
+    }
+
+    img{
+      width: 100%;
+      height: 100%;
+      border-top: $myGreenColor solid 2px;
+      border-bottom: $myGreenColor solid 2px;
+
+    }
+  }
+
+  .myIngredientTable{
+    td {
+      width: 100%;
+      padding: 5px;
+      text-align: left;
+    }
+    td:first-child{
+      width: 50%;
+    }
+  }
+
+  .myTextBlock{
+    width: 100%;
+    height: inherit;
+    padding: 20px;
+    background-color: white;
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  }
+
+  .auteurTable{
+    h3{
+      padding: 10px;
+    }
+    img{
+      height:100px;
+      width:100px;
+    }
+  }
+
+  .accountBeschrijving{
+    p{
+      font-style: italic;
+    }
+    h3{
+      color: $myOrangeColor;
+    }
+  }
+
+  .webcamFoto{
+    height: 240px;
+    width: 320px;
+  }
+
+  .myNavbar{
+    background-color: $myOrangeColor;
+    a{
+      color: white;
+      text-decoration: none;
+
+      &:hover{
+        color: $myBlueColor;
+        text-decoration:none;
+        cursor:pointer;
+      }
+    }
+  }
+
+  .myButton{
+    border: $myGreenColor solid 1px;
+    color: $myBlueColor;
+    background-color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    &:hover{
+      border: $myBlueColor solid 1px;
+      color: white;
+      background-color: $myBlueColor;
+    }
+
+    &:disabled{
+      border: $myRedColor solid 1px;
+      color: white;
+      background-color: $myRedColor;
+    }
+    &:disabled:hover{
+      border: $myRedColor solid 1px;
+      color: white;
+      background-color: $myRedColor;
+  }
+  }
+
+  .myInputTable td{
+    padding: 10px;
+
+  }
+
+  .myAddButton{
+    border: $myGreenColor solid 1px;
+    color: $myGreenColor;
+    background-color: white;
+    border-radius: 50%;
+
+    &:hover{
+      border: white solid 1px;
+      color: white;
+      background-color: $myGreenColor;
+    }
+  }
+
+  .myDeleteButton{
+    border: $myRedColor solid 1px;
+    color: $myRedColor;
+    background-color: white;
+    border-radius: 50%;
+
+    &:hover{
+      border: white solid 1px;
+      color: white;
+      background-color: $myRedColor;
+    }
+  }
+
+
+  .alignTopRight{
+    float:right;
+  }
+
+  .receptCard{
+    height: 100%;
+    width: 250px;
+
+    img {
+      height: 170px;
+      width: 100%;
+    }
+  }
+
+  .ingredientColor{
+    color: $myRedColor;
+  }
+
+  .receptFoto{
+    width: 300px;
+    height: 204px;
+    max-width: 100%;
+  }
+
+  .scrollWrapper{
+    max-height: 80vh;
+    min-height: 25vh;
+    overflow-y: auto;
+  }
+
+  .alignDivRight{
+    margin-left:auto; margin-right:5px;
+  }
+
+  .flexContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-between;
+    padding: 5px;
+    min-height: 100%;
+
+    .flexItem{
+      flex-basis: auto;
+      margin: 5px;
+    }
+  }
+
+  .clickable{
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 768px) {
+    .accountCard{
+      width: 50%;
+      margin-bottom: 5vh;
+    }
+    .receptCard{
+      width: 50%;
+    }
+    .padding-top-25-small{
+      padding-top: 25px;
+    }
+    .container{
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .receptCard{
+      height: 100%;
+      width: 150px;
+
+      img {
+        height: 100px;
+        width: 100%;
+      }
+    }
+
+    .scrollWrapper{
+      padding: 10px;
+    }
+  }
+
+  .linkStyle{
+    text-decoration: none;
+    color: white;
+
+    &:hover{
+      text-decoration: none;
+      color: $myOrangeColor;
+    }
+  }
+
+  .container{
+    padding-bottom: 20px;
+  }
+
+}

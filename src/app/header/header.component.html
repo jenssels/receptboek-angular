@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-md myNavbar sticky-top">
+  <a class="navbar-brand" routerLink="/">Receptboek</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" (click)="isCollapsed = !isCollapsed">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarContent" [ngbCollapse]="isCollapsed" (click)="isCollapsed = !isCollapsed">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/receptLijst" routerLinkActive="active">Recepten</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" *ngIf="gebruiker" routerLink="/receptFormulier" routerLinkActive="active">Recept aanmaken</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-auto" *ngIf="gebruiker">
+      <li class="nav-item" ngbDropdown *ngIf="gebruiker">
+        <a class="nav-link" href="javascript:void(0);" id="dropdownBasic3" (click)="$event.stopPropagation()" ngbDropdownToggle>API</a>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic3">
+          <button routerLink="/apiSearch" class="dropdown-item">Zoeken in de API</button>
+          <button routerLink="/apiOpslag" class="dropdown-item">Mijn opgeslagen API recepten</button>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav myOffset-right">
+      <li class="nav-item" ngbDropdown *ngIf="gebruiker">
+          <a class="nav-link" href="javascript:void(0);" id="dropdownBasic1" (click)="$event.stopPropagation()" ngbDropdownToggle><img [src]="gebruiker.fotoCode" class="avatar" alt="avatar">{{gebruiker.gebruikersnaam}}</a>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button routerLink="/mijnAccount" class="dropdown-item">Mijn account</button>
+            <button routerLink="/login" class="dropdown-item" (click)="gebruikerService.logout()">Logout</button>
+          </div>
+      </li>
+      <li class="nav-item" *ngIf="!gebruiker">
+        <a class="nav-link" routerLink="/login"  routerLinkActive="active">Login</a>
+      </li>
+    </ul>
+  </div>
+</nav>

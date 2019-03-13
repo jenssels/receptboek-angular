@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>Recepten API</h1>
+    <p>U kan hier zoeken naar gerechten van de Edamam API.</p>
+    <p>Gebruik engelse termen wanneer u zoekt naar recepten</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <form #f="ngForm">
+    <label for="receptNaam">Search on name:</label>
+    <input type="text" class="form-control" name=`receptNaam` id="receptNaam"
+           placeholder="Search recipes"
+           [(ngModel)]="zoekString"
+           #receptNaam="ngModel"
+           required
+    />
+      <button type="button" class="btn myButton mr-2" (click)="zoekRecepten()" [disabled]="f.invalid">Search</button>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12" style="margin-bottom: 10px; margin-top: 10px;">
+    <ngb-accordion [closeOthers]="true" activeIds="static-1">
+      <ngb-panel *ngFor="let recept of recepten; index as i" id=`static-{{i}}` title="{{recept.naam}}">
+        <ng-template ngbPanelContent>
+          <table width="100%">
+            <tr>
+              <td rowspan="5">
+                <a target="_blank" [href]="recept.link">
+                  <img class="img-fluid" height="250px" width="250px" [src]="recept.fotoCode" [alt]="recept.naam"/>
+                </a>
+              </td>
+              <td>
+                <h3>{{recept.naam}}</h3>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>Aantal personen: {{recept.aantalPersonen}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>Bereidingstijd: {{recept.tijd}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>Calorieën per maaltijd: {{getCalories(recept.calories, recept.aantalPersonen)}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p><button type="button" class="btn mr-2 myButton" (click)="saveRecept(i)">Opslagen</button></p>
+              </td>
+            </tr>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+  <div class="col-md-12" style="display: flex; justify-content: space-around" *ngIf="recepten.length > 0">
+    <button type="button" class="mr-2 btn myButton" (click)="decrement()" [disabled]="from - 10 < 0">Previous 10</button>
+    <button type="button" class="mr-2 btn myButton" (click)="increment()">Next 10</button>
+  </div>
+</div>
+
+
+

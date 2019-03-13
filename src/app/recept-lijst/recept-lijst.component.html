@@ -1,0 +1,12 @@
+<div *ngIf="gebruiker">
+  <div class="row">
+    <div class="col-md-12">
+      <app-recept-render headerTitle="Recepten gedeeld met mij"  [min]=4 mode="share" [gebruikerId]="gebruiker.uid"></app-recept-render>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-recept-render headerTitle="Recepten" [zoekEnabled]=true [min]=8 [increment]=8></app-recept-render>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="row" *ngIf="auteur">
+  <div class="col-md-12">
+    <h1>Account van {{auteur.gebruikersnaam}}</h1>
+  </div>
+</div>
+<div class="row"  *ngIf="auteur">
+  <div class="col-md-3">
+    <div class="accountCard">
+      <h4>{{auteur.gebruikersnaam}}</h4>
+      <img [src]="auteur.fotoCode || '/assets/icons/icon-96x96.png'" alt="profiel foto" />
+    </div>
+  </div>
+  <div class="col-md-5 offset-md-4">
+    <div class="accountBeschrijving">
+      <h3>Beschrijving van {{auteur.gebruikersnaam}}</h3>
+      <p>{{auteur.beschrijving || 'Geen beschrijving'}}</p>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="auteur">
+  <div class="col-md-12">
+    <app-recept-render mode="auteurPubliek" forId="{{auteur.uid}}" headerTitle="Publieke recepten van {{auteur.gebruikersnaam}}"></app-recept-render>
+  </div>
+</div>
+<div class="row" *ngIf="auteur && gebruiker">
+  <div class="col-md-12">
+    <app-recept-render mode="shareAuteur" forId="{{auteur.uid}}" gebruikerId="{{gebruiker.uid}}" headerTitle="Recepten gedeeld met mij van {{auteur.gebruikersnaam}}"></app-recept-render>
+  </div>
+</div>
